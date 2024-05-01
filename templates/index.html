@@ -1,0 +1,130 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block moreJs %}
+    <script src="{% static 'js/chartjs.js' %}"></script>
+    <script src="{% static 'js/mychart.js' %}"></script>
+{% endblock %}
+
+{% block mainContent %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Dashboard</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="card bg-primary text-white h-100">
+                    <div class="card-body py-5">
+                        <div class="text-center h1">
+                            {{ categories_count }}
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex">
+                        Nombre des categories
+                        <span class="ms-auto">
+                          <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-warning text-dark h-100">
+                    <div class="card-body py-5">{{ livres_count }}</div>
+                    <div class="card-footer d-flex">
+                        Nombres de livres
+                        <span class="ms-auto">
+                          <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-success text-white h-100">
+                    <div class="card-body py-5">{{ lecteurs_count }}</div>
+                    <div class="card-footer d-flex">
+                        Nombres des lecteurs
+                        <span class="ms-auto">
+                          <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-danger text-white h-100">
+                    <div class="card-body py-5">{{ prets_count}}</div>
+                    <div class="card-footer d-flex">
+                        Nombre total des emprunts
+                        <span class="ms-auto">
+                          <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
+                        Emprunts par jours
+                    </div>
+                    <div class="card-body">
+                        {% comment %}<canvas class="chart" width="400" height="200"></canvas>{% endcomment %}
+                        <canvas id="myChartBar" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span class="me-2"><i class="bi bi-pie-chart"></i></span>
+                        Nombre de livres par catégorie
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChartDoughnut" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span class="me-2"><i class="bi bi-graph-up"></i></span>
+                        Emprunts par mois
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChartLine" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span class="me-2"><i class="bi bi-pie-chart-fill"></i></span>
+                        Les catégories les plus demandées
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChartPie" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden" id="myDataJours" type="application/json">
+            {{ data_jours | json_script:"my-data-jours" }}
+        </div>
+
+        <div class="hidden" id="myDataMois" type="application/json">
+            {{ data_mois | json_script:"my-data-mois" }}
+        </div>
+
+        <div class="hidden" id="myDataCategories" type="application/json">
+            {{ category_counts | json_script:"my-data-categories" }}
+        </div>
+
+        <div class="hidden" id="myDataCategoriesCount" type="application/json">
+            {{ livres_demande_counts | json_script:"my-data-categories-count" }}
+        </div>
+    </div>
+{% endblock %}
