@@ -16,49 +16,61 @@
         <div class="row">
             <div class="col-md-3 mb-3">
                 <div class="card bg-primary text-white h-100">
-                    <div class="card-body py-5">
-                        <div class="text-center h1">
+                    <div class="card-body py-3">
+                        <div class="text-center " style="font-size: 70px; color: white">
                             {{ categories_count }}
                         </div>
                     </div>
                     <div class="card-footer d-flex">
-                        Nombre des categories
-                        <span class="ms-auto">
-                          <i class="bi bi-chevron-right"></i>
+                        <span class="pe-2">
+                          <i class="bi bi-bookmark-heart-fill"></i>
                         </span>
+                        Nombre des categories
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-3">
                 <div class="card bg-warning text-dark h-100">
-                    <div class="card-body py-5">{{ livres_count }}</div>
+                    <div class="card-body py-3">
+                        <div class="text-center " style="font-size: 70px; color: white">
+                            {{ livres_count }}
+                        </div>
+                    </div>
                     <div class="card-footer d-flex">
-                        Nombres de livres
-                        <span class="ms-auto">
-                          <i class="bi bi-chevron-right"></i>
+                        <span class="pe-2">
+                          <i class="bi bi-journal-bookmark-fill"></i>
                         </span>
+                        Nombres des livres
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-3">
                 <div class="card bg-success text-white h-100">
-                    <div class="card-body py-5">{{ lecteurs_count }}</div>
+                    <div class="card-body py-3">
+                        <div class="text-center " style="font-size: 70px; color: white">
+                            {{ lecteurs_count }}
+                        </div>
+                    </div>
                     <div class="card-footer d-flex">
-                        Nombres des lecteurs
-                        <span class="ms-auto">
-                          <i class="bi bi-chevron-right"></i>
+                        <span class="pe-2">
+                          <i class="bi bi-person-fill"></i>
                         </span>
+                        Nombres des lecteurs
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-3">
                 <div class="card bg-danger text-white h-100">
-                    <div class="card-body py-5">{{ prets_count}}</div>
+                    <div class="card-body py-3">
+                        <div class="text-center " style="font-size: 70px; color: white">
+                            {{ prets_count }}
+                        </div>
+                    </div>
                     <div class="card-footer d-flex">
-                        Nombre total des emprunts
-                        <span class="ms-auto">
-                          <i class="bi bi-chevron-right"></i>
+                        <span class="pe-2">
+                          <i class="bi bi-calendar-check"></i>
                         </span>
+                        Nombre total des emprunts
                     </div>
                 </div>
             </div>
@@ -71,7 +83,6 @@
                         Emprunts par jours
                     </div>
                     <div class="card-body">
-                        {% comment %}<canvas class="chart" width="400" height="200"></canvas>{% endcomment %}
                         <canvas id="myChartBar" width="400" height="200"></canvas>
                     </div>
                 </div>

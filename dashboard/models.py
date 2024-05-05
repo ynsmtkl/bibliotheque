@@ -26,6 +26,7 @@ class Livre(models.Model):
     auteur = models.ForeignKey(Auteur, on_delete=models.CASCADE)
     DatePublication = models.DateField()
     edition = models.CharField(max_length=255)
+    hors_pret = models.BooleanField(default=False)
 
     def __str__(self):
         return self.titre
@@ -37,7 +38,7 @@ class Stock(models.Model):
     quantite = models.IntegerField()
 
     def __str__(self):
-        return f"{self.livre.ref} ({self.quantite})"
+        return f"{self.livre.titre} - Qté: {self.quantite}"
 
 
 class Role(models.Model):
@@ -49,8 +50,11 @@ class Role(models.Model):
 
 
 class Personne(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name
 
 
 class Lecteur(models.Model):
@@ -98,7 +102,29 @@ class Demande(models.Model):
 
     def __str__(self):
         return self.lecteur.personne.user.first_name + " " \
-            + self.lecteur.personne.user.last_name + " Demande " + self.livre.titre \
-            + " (" + self.status.nom + ") "
+               + self.lecteur.personne.user.last_name + " Demande " + self.livre.titre \
+               + " (" + self.status.nom + ") "
 
+
+class ListAttente(models.Model):
+    livre_att = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='livre_att')
+    lecteur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lecteur_att')
+    date_att = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.livre_att.titre + ' ' + self.lecteur.username
+
+
+class PretModel(models.Model):
+    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, related_name='livre_prete')
+    lecteur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lecteur')
+    date_pret = models.DateField(auto_now=True)
+    date_retour = models.DateField()
+    nbre_prets = models.IntegerField(default=0)
+    retard = models.IntegerField(null=True, blank=True)
+    frais_retard = models.FloatField(null=True, blank=True)
+    status = models.SlugField()
+
+    def __str__(self):
+        return self.livre.titre + ' ' + self.status
 

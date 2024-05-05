@@ -13,7 +13,6 @@ const dataMois = JSON.parse(myDataMoisElement.textContent);
 const dataCategories = JSON.parse(myDataCategoriesElement.textContent);
 const dataCategoriesCount = JSON.parse(myDataCategoriesCountElement.textContent);
 
-console.log(dataCategoriesCount)
 
 const keysJours = Object.keys(dataJours);
 const valuesJours = Object.values(dataJours);
@@ -31,7 +30,6 @@ var livreCounts = dataCategories.map(function(item) {
     return item.livre_count;
 });
 
-
 // Extract array of noms
 var nomsCategoriesDemande = dataCategoriesCount.map(function(item) {
     return item.nom;
@@ -39,8 +37,7 @@ var nomsCategoriesDemande = dataCategoriesCount.map(function(item) {
 
 // Extract array of livre_counts
 var livreDemandeCounts = dataCategoriesCount.map(function(item) {
-    return item.livre_demand_count
-;
+    return item.livre_demand_count;
 });
 
 

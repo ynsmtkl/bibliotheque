@@ -1,0 +1,22 @@
+{% extends 'components/base.html' %}
+{% load static %}
+{% block mainContent %}
+
+<div style='display:flex; flex-direction:row; margin-left:20px;'>
+    <h4><a href="{% url 'retourlivre' %}">Retourner un livre prété </a></h4>
+    <h4> / </h4>
+    <h4><a href="{% url 'attentelivre' %}"> liste d'attente</a></h4>
+</div>
+<form enctype="multipart/form-data" id='livre-pret' method="post" action="" style="display:flex; flex-direction:column; width:50%; justify-content: center;margin-left:20px;">
+    {% csrf_token %}
+<label for="livres-dispo">Choisi le livre que vous voulez {{user.username}}:</label>
+    <select name="titre" id="livres-dispo">
+        {% for livre in livres %} 
+        <option value="{{livre.id}}" name="titre" >{{livre.titre}}</option>
+        {% endfor %}
+    </select>
+    
+    <input type="submit" value="Préter2" class="btn btn-primary"  />
+
+</form>
+  {% endblock %}
