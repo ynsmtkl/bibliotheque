@@ -3,9 +3,11 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils import timezone
 import datetime
-from prets.models import PretModel
 
-#cette class est utiliser pour envoyer un mail a clien sur le retard et les frais de cette retard
+from dashboard.models import PretModel
+
+
+# cette class est utiliser pour envoyer un mail a clien sur le retard et les frais de cette retard
 class Command(BaseCommand):
     def handle(self, **options):
         today = datetime.date.today()

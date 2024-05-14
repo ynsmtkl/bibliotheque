@@ -33,8 +33,7 @@
         <a
                 class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold"
                 href="#"
-        >Frontendfunn</a
-        >
+        >Bibliotheque</a>
         <button
                 class="navbar-toggler"
                 type="button"
@@ -93,50 +92,13 @@
                     <hr class="dropdown-divider bg-light"/>
                 </li>
                 <li>
-                    <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
-                        Categories
-                    </div>
-                </li>
-                <li>
-                    <a
-                            class="nav-link px-3 sidebar-link"
-                            data-bs-toggle="collapse"
-                            href="#layouts"
-                    >
-                        <span class="me-2"><i class="bi bi-layout-split"></i></span>
-                        <span>Livres</span>
-                        <span class="ms-auto">
-                  <span class="right-icon">
-                    <i class="bi bi-chevron-down"></i>
-                  </span>
-                </span>
-                    </a>
-                    <div class="collapse" id="layouts">
-                        <ul class="navbar-nav ps-3">
-                            <li>
-                                <a href="#" class="nav-link px-3">
-                      <span class="me-2"
-                      ><i class="bi bi-speedometer2"></i
-                      ></span>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
                     <a href="{% url 'livres' %}" class="nav-link px-3">
                         <span class="me-2"><i class="bi bi-book-fill"></i></span>
-                        <span>Pages</span>
+                        <span>Livres</span>
                     </a>
                 </li>
                 <li class="my-4">
                     <hr class="dropdown-divider bg-light"/>
-                </li>
-                <li>
-                    <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
-                        Addons
-                    </div>
                 </li>
                 <li>
                     <a href="{% url 'demandepret' %}" class="nav-link px-3">
@@ -145,9 +107,18 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link px-3">
+                    <a href="{% url 'attentelivre' %}" class="nav-link px-3">
                         <span class="me-2"><i class="bi bi-table"></i></span>
-                        <span>Tables</span>
+                        <span>List attente</span>
+                    </a>
+                </li>
+                <li class="my-4">
+                    <hr class="dropdown-divider bg-light"/>
+                </li>
+                <li>
+                    <a href="{% url 'retourlivre' %}" class="nav-link px-3">
+                        <span class="me-2"><i class="bi bi-table"></i></span>
+                        <span>Retourner livre</span>
                     </a>
                 </li>
             </ul>

@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from dashboard.models import Livre, PretModel, ListAttente, Stock
 from .forms import LivrePretForm
 import datetime
@@ -16,19 +15,13 @@ def demandePret(request):
         if myform.is_valid() and request.user.is_authenticated:
             pret_livre = Livre.objects.get(titre=myform.cleaned_data['titre'])
 
-
             if PretModel.objects.filter(lecteur=request.user.id, livre=pret_livre.id) or PretModel.objects.filter(
                     lecteur=request.user.id, nbre_prets__gte=3):
-                html = "<div style='max-width: 800px; margin: auto; padding: 30px; border: 2px solid #ccc; " \
-                       "border-radius: 8px; background-color: #ffcccc; font-weight: bold; font-size: 20px;'>Refusé, " \
-                       "vous avez déjà emprunté ce livre ou vous avez dépassé le nombre maximum de prêts.</div> "
-                return HttpResponse(html)
+                return render(request, "prets/refuser.html")
 
             if PretModel.objects.filter(lecteur=request.user.id, date_retour__lt=datetime.date.today()):
-                html = "<div style='max-width: 800px; margin: auto; padding: 30px; border: 2px solid #ccc; " \
-                       "border-radius: 8px; background-color: #ffcccc; font-weight: bold; font-size: 20px;'>Refusé, " \
-                       "veuillez régler la situation du retard commise.</div> "
-                return HttpResponse(html)
+
+                return render(request, "prets/refuser-retard.html")
 
             stock = Stock.objects.get(livre_id=pret_livre.id)
             if stock.quantite > 1 and not pret_livre.hors_pret:
@@ -44,24 +37,17 @@ def demandePret(request):
 
                 stock.quantite -= 1
                 stock.save()
-                html = "<div style='max-width: 800px; margin: auto; padding: 30px; border: 2px solid #ccc; " \
-                       "border-radius: 8px; background-color: #d3f5d3; font-weight: bold; font-size: 20px;'>Demande " \
-                       "approuvée</div> "
-                return HttpResponse(html)
+
+                return render(request, "prets/approve.html")
 
             elif stock.quantite == 1:
                 ListAttente.objects.create(livre_att=pret_livre, lecteur=request.user,
                                            date_att=datetime.datetime.now())
-                html = "<div style='max-width: 800px; margin: auto; padding: 30px; border: 2px solid #ccc; " \
-                       "border-radius: 8px; background-color: #ffe0b2; font-weight: bold; font-size: 20px;'>Vous êtes " \
-                       "enregistré dans la liste d'attente en raison de l'insuffisance du livre demandé.</div> "
-                return HttpResponse(html)
+
+                return render(request, "prets/enregister-attente.html")
 
             elif pret_livre.hors_pret:
-                html = "<div style='max-width: 800px; margin: auto; padding: 30px; border: 2px solid #ccc; " \
-                       "border-radius: 8px; background-color: #ffcccc; font-weight: bold; font-size: 20px;'>Désolé, " \
-                       "ce livre est hors prêt.</div> "
-                return HttpResponse(html)
+                return render(request, "prets/hors-pret.html")
         else:
             print('error')
 
@@ -75,8 +61,8 @@ def retourLivre(request):
         if myform.is_valid() and request.user.is_authenticated:
             pret_livre = Livre.objects.get(titre=myform.cleaned_data['titre'])
             if PretModel.objects.filter(lecteur=request.user.id, date_retour__lt=datetime.date.today()):
-                html = "<html><body>Refusé régler votre situation du retard commis</body></html>"
-                return HttpResponse(html)
+
+                return render(request, "prets/regler-situation.html")
             else:
                 livre_retour = Livre.objects.get(pk=pret_livre.id)
                 stock = Stock.objects.get(livre_id=livre_retour.id)
@@ -100,8 +86,7 @@ def retourLivre(request):
                         pret.nbre_prets = cte.nbre_prets - 1
                         pret.save()
 
-                html = "<html><body>Retour du livre avec succés</body></html>"
-                return HttpResponse(html)
+                return render(request, "prets/livre-retourne.html")
 
     return render(request, 'prets/retourpret.html', {'livres': livres, 'user': request.user})
 

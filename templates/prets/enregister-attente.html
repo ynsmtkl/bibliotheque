@@ -1,0 +1,15 @@
+{% extends 'components/base.html' %}
+
+
+{% block mainContent %}
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="alert alert-info text-center" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm-.93-5.066v-3.33a.773.773 0 0 1 1.553 0v3.33a.773.773 0 0 1-1.553 0zM8 6.886a.773.773 0 0 1 .773.773v4.839a.773.773 0 1 1-1.546 0V7.659A.773.773 0 0 1 8 6.886z"/>
+            </svg>
+            Vous êtes enregistré dans la liste d'attente en raison de l'insuffisance du livre demandé.
+        </div>
+    </div>
+{% endblock %}

@@ -1,25 +1,36 @@
 {% extends 'components/base.html' %}
 {% load static %}
 {% block mainContent %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/prets.css' %}"/>
+    <div class="d-flex justify-content-center align-items-center w-50">
+        <table class="table">
+            <tr class="d-flex justify-content-center">
+                <td>
+                    <a class="btn btn-warning" href="{% url 'demandepret' %}">Prêter un livre</a>
+                </td>
+                <td>
+                    <a class="btn btn-info" href="{% url 'attentelivre' %}">Liste d'attente</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <form enctype="multipart/form-data" id='livre-pret' method="post" action="">
+                        {% csrf_token %}
+                        <label for="livres-dispo">Liste de vos livres prêtés {{ user.username }}:</label>
+                        <select name="titre" id="livres-dispo" class="form-select mt-3">
+                            {% for livre in livres %}
+                                <option value="{{ livre.livre.titre }}" name="titre">{{ livre.livre.titre }}
+                                    - {{ livre.date_retour }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="d-grid">
+                            <input type="submit" value="Retourner" class="btn btn-primary mt-3"/>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-<div style='display:flex; flex-direction:row; margin-left:20px;'>
-    <h4><a href="{% url 'demandepret' %}">Preter un livre<a/></h4>
-    <h4> / </h4>
-    <h4><a href="{% url 'attentelivre' %}">liste d'attente<a/></h4>
-</div>
-<form enctype="multipart/form-data" id='livre-pret' method="post" action="" style="display:flex; flex-direction:column; width:50%; justify-content: center; margin-left:20px;">
-    {% csrf_token %}
-<label for="livres-dispo">Liste de vos livres pretés {{user.username}}:</label> 
-    <select name="titre" id="livres-dispo" ">
-        {% for livre in livres %} 
-        <option value="{{livre.livre.titre}}" name="titre" >{{livre.livre.titre}} - {{livre.date_retour}}</option> 
-        {% endfor %}
-    </select>
-    
-    <input type="submit" value="Retourner" />
-
-</form>
 
 {% endblock %}
   
